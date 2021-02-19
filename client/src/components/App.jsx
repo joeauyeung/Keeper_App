@@ -24,12 +24,11 @@ function App() {
     function deleteNote(id) {
         axios.post('http://localhost:8080/api/delete', {id: id})
         setNotes(prevNotes => {
-            reutrn prevNotes.filter(
-                (item) => {
-                    return item.id !== id
+            return prevNotes.filter((item) => {
+                    return item.id !== id;
                 }
-            )
-        })
+            );
+        });
     }
 
     return ( <div >
