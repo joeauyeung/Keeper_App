@@ -27,11 +27,10 @@ const Note = mongoose.model("Note", noteSchema)
 
 app.route("/api")
     .get((req, res) => {
-        console.log("Request made")
         Note.find((err, notes) => {
-            if (err) res.send(err);
-            res.send(notes)
-        });
+            res.send(notes);
+            return;}
+        );
     })
     .post((req, res) => {
         const note = new Note({
