@@ -1,27 +1,23 @@
-const Express = require("express");
+require("dotenv").config({ path: "./config/config" })
+
+const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser")
-const config = require("./config")
+const config = require("./server/config/config")
 
-app = Express();
+app = express();
 app.use(cors());
-mongoose.connect(`mongodb+srv://admin:${config.dbPass}@keeperdb.xcpk5.mongodb.net/KeeperDB?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log("Connected to database"))
     .catch(err => console.log(err));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use("/", Express.static("client/build"))
+app.use("/", express.static("client/build"))
 
 // Establish MongoDB
 
-const noteSchema = new mongoose.Schema({
-    title: String,
-    content: String
-})
-
-const Note = mongoose.model("Note", noteSchema)
 
 // API Routes 
 
