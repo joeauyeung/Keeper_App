@@ -1,23 +1,22 @@
-require("dotenv").config({ path: "./config/config" })
+require("dotenv").config({ path: "./server/config/config" });
 
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser")
-const config = require("./server/config/config")
+const bodyParser = require("body-parser");
+const config = require("./server/config/config");
+const connectDB = require("./server/config/connectDB");
 
 app = express();
 app.use(cors());
-mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then(() => console.log("Connected to database"))
-    .catch(err => console.log(err));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use("/", express.static("client/build"))
 
-// Establish MongoDB
-
+// Establish MongoDB Atlas Connection
+connectDB();
 
 // API Routes 
 
