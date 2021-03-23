@@ -19,34 +19,8 @@ app.use("/", express.static("client/build"))
 connectDB();
 
 // API Routes 
+app.use("/notes", require("./routes/notes"));
 
-app.route("/api")
-    .get((req, res) => {
-        Note.find((err, notes) => {
-            res.send(notes);
-            return;}
-        );
-    })
-    .post((req, res) => {
-        const note = new Note({
-            title: req.body.title,
-            content: req.body.content
-        });
-        note.save();
-    });
-
-// Delete Note
-
-app.post("/api/delete", (req,res) => {
-    console.log(req.body.id)
-    Note.findByIdAndRemove(req.body.id, err => {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log("Note deleted")
-        }
-    })
-})
 
 app.all("/*", (req, res) => {res.sendFile(__dirname + "/client/build/index.html")});
 

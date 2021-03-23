@@ -20,12 +20,18 @@ router.post("/", ( req, res ) => {
         content: req.body.content
     });
     note.save();
-})
-
-.post((req, res) => {
-    const note = new Note({
-        title: req.body.title,
-        content: req.body.content
-    });
-    note.save();
 });
+
+// @desc    Deletes note from database
+// @route   POST /notes/delete
+
+router.post("/delete", ( req, res ) => {
+    Note.findbyIdandRemove(req.body.id, err => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("Note deleted")
+        }
+    });
+});
+
